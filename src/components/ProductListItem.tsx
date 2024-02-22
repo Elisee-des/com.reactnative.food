@@ -15,7 +15,7 @@ const Vibrate = async () => {
 
 const ProductsListItem = ({ product }: ProductsListItemProps) => {
   return (
-    <Link href={`/${product.id}`} onPress={Vibrate} asChild>
+    <Link href={`/menu/${product.id}`} onPress={Vibrate} asChild>
       <Pressable style={styles.container}>
         <Image
           source={{ uri: product?.image?.toString() || defaultPizzaImage }}
