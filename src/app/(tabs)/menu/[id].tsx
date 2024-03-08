@@ -18,15 +18,28 @@ const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 const ProductDetailScreen = () => {
   const { id: idString } = useLocalSearchParams();
   const id = parseFloat(typeof idString === "string" ? idString : idString[0]);
-  const product = products[0];
+  const product = products.find((p) => p.id === id);
 
   const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
 
+  const addToCart = () => {
+    console.warn("Ajouter au panier avec success");
+  };
+
+  if (!product) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Le produit n'existe pas !</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
+      <Stack.Screen options={{ title: product?.name }} />
       <Image
         style={styles.image}
-        source={{ uri: product?.image?.toString() }}
+        source={{ uri: product?.image?.toString() || defaultPizzaImage }}
         resizeMode="contain"
       />
       <Text>Selectionner la taille</Text>
@@ -56,7 +69,7 @@ const ProductDetailScreen = () => {
         ))}
       </View>
       <Text style={styles.price}>${product?.price}</Text>
-      {/* <Button text="Ajouter au panier" onPress={addToCart} /> */}
+      <Button text="Ajouter au panier" onPress={addToCart} />
     </View>
   );
 };
